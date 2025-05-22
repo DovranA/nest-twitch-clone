@@ -1,0 +1,28 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"declaration": true,
+		"removeComments": true,
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"allowSyntheticDefaultImports": true,
+		"target": "ES2023",
+		"sourceMap": true,
+		"outDir": "./dist",
+		"baseUrl": "./",
+		"paths": {
+			"@/*": ["*"],
+			"@prisma/generated": ["prisma/generated"],
+			"@prisma/generated/*": ["prisma/generated/*"]
+		},
+		"incremental": true,
+		"skipLibCheck": true,
+		"strictNullChecks": false,
+		"noImplicitAny": false,
+		"strictBindCallApply": false,
+		"forceConsistentCasingInFileNames": false,
+		"noFallthroughCasesInSwitch": false,
+		"jsx": "react"
+	},
+	"include": ["src", "prisma/generated"]
+}
