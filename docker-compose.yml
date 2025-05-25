@@ -39,10 +39,20 @@ services:
         networks:
             - teastream-backend
 
+    mailhog:
+        container_name: mailhog
+        image: mailhog/mailhog
+        restart: no
+        ports:
+            - '1025:1025'
+            - '6030:8025'
+        networks:
+            - teastream-backend
 volumes:
     postgres_data:
     redis_data:
     redisinsight_data:
+    mailhog:
 
 networks:
     teastream-backend:
