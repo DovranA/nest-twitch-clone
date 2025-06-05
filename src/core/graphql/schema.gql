@@ -36,13 +36,26 @@ type Mutation {
   createUser(data: CreateUserInput!): Boolean!
   loginUser(data: LoginInput!): UserModel!
   logoutUser: Boolean!
+  newPassword(data: NewPasswordInput!): Boolean!
   removeSession(id: String!): Boolean!
+  resetPassword(data: ResetPasswordInput!): Boolean!
+  verifyAccount(data: VerificationInput!): UserModel!
+}
+
+input NewPasswordInput {
+  password: String!
+  passwordRepeat: String!
+  token: String!
 }
 
 type Query {
   findCurrentSession: SessionModel!
   findProfile: UserModel!
   findSessionByUser: [SessionModel!]!
+}
+
+input ResetPasswordInput {
+  email: String!
 }
 
 type SessionMetadataModel {
@@ -65,7 +78,13 @@ type UserModel {
   displayName: String!
   email: String!
   id: ID!
+  isEmailVerified: Boolean!
+  isVerified: Boolean!
   password: String!
   updatedAt: DateTime!
   username: String!
+}
+
+input VerificationInput {
+  token: String!
 }
