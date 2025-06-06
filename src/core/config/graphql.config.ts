@@ -9,6 +9,7 @@ export function getGraphQLConfig(
 ): ApolloDriverConfig {
 	return {
 		playground: isDev(configService),
+
 		path: configService.getOrThrow<string>('GRAPHQL_PREFIX'),
 		autoSchemaFile: join(process.cwd(), 'src/core/graphql/schema.gql'),
 		sortSchema: true,

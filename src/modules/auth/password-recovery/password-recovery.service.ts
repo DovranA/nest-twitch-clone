@@ -41,7 +41,8 @@ export class PasswordRecoveryService {
 		const resetToken = await generateToken(
 			this.prismaService,
 			user,
-			TokenType.PASSWORD_RESET
+			TokenType.PASSWORD_RESET,
+			true
 		)
 
 		const metadata = getSessionMetadata(req, userAgent)
@@ -56,7 +57,7 @@ export class PasswordRecoveryService {
 	public async newPassword(input: NewPasswordInput) {
 		const { password, token } = input
 		const existingToken = await this.prismaService.token.findUnique({
-			where: { token, type: TokenType.EMAIL_VERIFY }
+			where: { token, type: TokenType.PASSWORD_RESET }
 		})
 		if (!existingToken) {
 			throw new NotFoundException("Token don't found")

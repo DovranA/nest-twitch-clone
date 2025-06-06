@@ -1,6 +1,7 @@
 import { ValidationPipe } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
+import { altairExpress } from 'altair-express-middleware'
 import { RedisStore } from 'connect-redis'
 import * as cookieParser from 'cookie-parser'
 import * as session from 'express-session'
@@ -48,6 +49,12 @@ async function bootstrap() {
 	})
 
 	app.useGlobalPipes(new ValidationPipe({ transform: true }))
+	app.use(
+		'/altair',
+		altairExpress({
+			endpointURL: '/graphql'
+		})
+	)
 	await app.listen(config.getOrThrow<string>('APPLICATION_PORT') ?? 3000)
 }
 bootstrap()
