@@ -42,10 +42,25 @@ services:
     mailhog:
         container_name: mailhog
         image: mailhog/mailhog
-        restart: no
+        restart: always
         ports:
             - '1025:1025'
             - '6030:8025'
+        networks:
+            - teastream-backend
+    minio:
+        container_name: minio
+        image: minio/minio:RELEASE.2024-06-22T05-26-45Z
+        restart: always
+        ports:
+            - '9000:9000' # API
+            - '9001:9001' # Web UI
+        environment:
+            - MINIO_ROOT_USER=${MINIO_ROOT_USER}
+            - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}
+        volumes:
+            - minio_data:/data
+        command: server --console-address ":9001" /data
         networks:
             - teastream-backend
 volumes:
@@ -53,6 +68,7 @@ volumes:
     redis_data:
     redisinsight_data:
     mailhog:
+    minio_data:
 
 networks:
     teastream-backend:

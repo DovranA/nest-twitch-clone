@@ -25,15 +25,54 @@ model User {
   isTotpEnabled   Boolean @default(false) @map("is_totp_enabled")
   totpSecret      String? @map("totp_secret")
 
-  isDeactivated Boolean  @default(false) @map("is_deactivated")
+  isDeactivated Boolean   @default(false) @map("is_deactivated")
   deactivatedAt DateTime? @map("deactivated_at")
 
-  tokens Token[]
+  tokens      Token[]
+  socialLinks SocialLink[]
+  stream      Stream?
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("users")
+}
+
+model Stream {
+  id String @id @default(uuid())
+
+  title        String
+  thumbnailUrl String? @map("thumbnail_url")
+
+  ingressId String? @map("ingress_id")
+  serverUrl String? @map("server_url")
+  streamKey String? @map("stream_key")
+
+  isLive Boolean @default(false) @map("is_live")
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String? @unique @map("user_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("streams")
+}
+
+model SocialLink {
+  id String @id @default(uuid())
+
+  title String
+  url   String
+
+  position Int
+
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String? @map("user_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("social_links")
 }
 
 model Token {
